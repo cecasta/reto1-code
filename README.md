@@ -8,3 +8,5 @@ JDK 11
 Gradle
 spring tool suit 4
 
+# Url de acceso
+http://localhost:8080/api/generarReserva
