@@ -23,10 +23,8 @@ public class SolicitudReserva {
 	
 	private static List<FiltroSolicitudReserva> leerArchivoSolicitud(Path path)
     {
-		List<FiltroSolicitudReserva> listFiltros = new ArrayList<>();
+		List<FiltroSolicitudReserva> listFiltros = new ArrayList<FiltroSolicitudReserva>();
 		FiltroSolicitudReserva temp = null;
-        Map<String, Object> map
-            = new HashMap<String, Object>();
         BufferedReader br = null;
   
         try {
@@ -44,7 +42,6 @@ public class SolicitudReserva {
             	
                 // split the line by :
                 String[] parts = line.split(":");
-                System.out.println(parts[0]);
                 if(parts[0].charAt(0) == '<') {
                     temp = new FiltroSolicitudReserva(parts[0]);
                 	listFiltros.add(temp);

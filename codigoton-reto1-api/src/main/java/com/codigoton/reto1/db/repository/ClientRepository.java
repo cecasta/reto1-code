@@ -28,17 +28,19 @@ public interface ClientRepository extends JpaRepository<Client, Integer> {
 			+ "c.location, c.company, c.encrypt, SUM(p.balance) as sumBalance) "
 			+ "FROM Client c JOIN c.accounts p "
 			+ "WHERE "
-			+"(:type is null or c.type = :type) "
+			+"(:type is 0 or c.type = :type) "
 			+"AND "
-			+"(:location is null or c.location = :location) "
+			+"(:location is '0' or c.location = :location) "
 			+"AND "
-			+"(:ri is null or p.balance > :ri) "
+			+"(:ri is null  or p.balance > :ri) "
 			+"AND "
-			+"(:rf is null or p.balance < :rf) "
+			+"(:rf is null  or p.balance < :rf) "
 			+ "GROUP BY c.id ORDER BY sumBalance DESC")
 	public List<BalanceCuentasClient> getBalanceClients(@Param("type") int type, 
 			@Param("location") String location, @Param("ri") BigDecimal ri,
-			@Param("rf") BigDecimal rf);	
+			@Param("rf") BigDecimal rf);
+	
+	
 
 
 }

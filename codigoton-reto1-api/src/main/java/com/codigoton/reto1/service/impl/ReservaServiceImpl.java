@@ -34,8 +34,11 @@ public class ReservaServiceImpl implements ReservaService {
 		List<FiltroSolicitudReserva> filtros = solicitud.obtenerFiltroReserva(rutaSolicitudReserva);
 		List<ReservaMesaRs> rs = new ArrayList<ReservaMesaRs>();
 		filtros.forEach(filtro -> {
-			List<BalanceCuentasClient> result = clientRepository.getBalanceClients(filtro.getType(), filtro.getLocation(), 
-					filtro.getRi(), filtro.getRf());
+			List<BalanceCuentasClient> result = clientRepository.getBalanceClients(filtro.getType(), (filtro.getLocation() == null) ? "0" : filtro.getLocation(), 
+					(filtro.getRi() == null) ? null : filtro.getRi(), (filtro.getRf() == null) ? null : filtro.getRf());
+			System.out.println(filtro.getType() + filtro.getLocation()+
+					filtro.getRi()+filtro.getRf());
+			System.out.println("TOTAL Resultados MESA "+filtro.getName()+ ": "+result.size());
 			if(result != null)
 				rs.add(procesar.procesarSolicitud(result, filtro));
 		});

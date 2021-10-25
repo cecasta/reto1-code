@@ -16,7 +16,10 @@ public class ProcesarSolicitud {
 	private int totalMujeres = 0;
 	public ReservaMesaRs procesarSolicitud(List<BalanceCuentasClient> balances, FiltroSolicitudReserva filtro) {
 		ReservaMesaRs rs = new ReservaMesaRs();
-		
+		clientes = new ArrayList();
+		listEmpresas = new ArrayList<>();
+		totalHombres = 0;
+		totalMujeres = 0;
 		balances.forEach(balance -> {
 			if(validarCliente(balance)) {
 				clientes.add(balance.getCode());
@@ -29,10 +32,17 @@ public class ProcesarSolicitud {
 			}
 			if(clientes.size() == 8)
 				return;
+			System.out.println(clientes.toString());
 		});
-		
+		System.out.println("########################################################################################");
+		System.out.println("MESA: "+filtro.getName() +" TotalHombre:"+ totalHombres + " TotalMujeres: "+totalMujeres);
 		rs.setName(filtro.getName());
 		rs.setClients(clientes);
+		if(clientes.size() == 8) {
+			rs.setEstado("OK");
+		}else {
+			rs.setEstado("CANCELADA");
+		}
 		return rs;
 	}
 	

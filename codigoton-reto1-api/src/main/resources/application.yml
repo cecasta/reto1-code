@@ -11,8 +11,8 @@ spring:
     show-sql: true    
     properties:
       hibernate:
-        show_sql: true
-        format_sql: true
+        sql: DEBUG
+        type: trace   
   servlet:
     multipart:
       max-file-size: 3MB

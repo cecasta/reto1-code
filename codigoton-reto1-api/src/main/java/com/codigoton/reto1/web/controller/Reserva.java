@@ -3,24 +3,22 @@ package com.codigoton.reto1.web.controller;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.math.BigDecimal;
+import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
+
 import java.util.List;
-import java.util.Optional;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.ModelMap;
+
 import org.springframework.util.ResourceUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,10 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.codigoton.reto1.db.entities.Client;
-import com.codigoton.reto1.db.entities.ClientGroup;
-import com.codigoton.reto1.db.repository.ClientRepository;
-import com.codigoton.reto1.dto.BalanceCuentasClient;
+
 import com.codigoton.reto1.dto.ReservaMesaRs;
 import com.codigoton.reto1.service.ReservaService;
 
@@ -57,7 +52,7 @@ public class Reserva {
 
    
     @PostMapping("/uploadFile")
-   public ResponseEntity<List<ReservaMesaRs>> singleFileUpload(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
+   public void singleFileUpload(@RequestParam("file") MultipartFile file, HttpServletResponse response) {
 
        try {
            // Get the file and save it somewhere
@@ -66,13 +61,23 @@ public class Reserva {
            Files.write(path, bytes);
 
            List<ReservaMesaRs> clients = reservaService.generarReserva(path);
-           return ResponseEntity.ok(clients);
+           //return ResponseEntity.ok(clients);
+           response.addHeader("content-type", "text/plain; charset=utf-8");
+           response.setStatus(200);
+
+           PrintWriter out = response.getWriter();
+           clients.forEach(cli ->{
+        	   out.println(cli.getName());
+        	   if(cli.getEstado().equals("OK")) {
+        		   out.println(cli.getClients().toString());
+        	   }else {
+        		   out.println(cli.getEstado());
+        	   }
+        	   
+           });
        } catch (IOException e) {
            e.printStackTrace();
        }
-	return null;
-
-       
        
        
    }
