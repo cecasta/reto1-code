@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  db-reto1-code:
+    image: mysql:5.7.28
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=evalart_reto
+      - MYSQL_USER=dev
+      - MYSQL_PASSWORD=dev
+    volumes:
+      - mysql_data_reto1:/var/lib/mysql
+
+  phpmyadmin-reto1-code:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - 8088:80
+    environment:
+      - PMA_HOST=db-reto1-code
+    depends_on:
+      - db-reto1-code
+
+volumes:
+  mysql_data_reto1:

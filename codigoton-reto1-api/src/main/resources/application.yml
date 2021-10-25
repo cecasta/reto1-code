@@ -13,4 +13,9 @@ spring:
       hibernate:
         show_sql: true
         format_sql: true
-             
+  servlet:
+    multipart:
+      max-file-size: 3MB
+      max-request-size: 3MB
+      enabled: true
+                     
