@@ -1,0 +1,16 @@
+server:
+  port: 8080
+   
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/evalart_reto?useSSL=false
+    username: dev    
+    password: dev
+  jpa:
+    show-sql: true    
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+             
