@@ -69,10 +69,11 @@ public class Reserva {
            clients.forEach(cli ->{
         	   out.println(cli.getName());
         	   if(cli.getEstado().equals("OK")) {
-        		   out.println(cli.getClients().toString());
+        		   out.println(cli.getClients().toString().replace("[","").replace("]",""));
         	   }else {
         		   out.println(cli.getEstado());
         	   }
+        	   out.println("");
         	   
            });
        } catch (IOException e) {
